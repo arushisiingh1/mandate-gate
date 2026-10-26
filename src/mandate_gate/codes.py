@@ -1,0 +1,62 @@
+"""Outcomes and machine-readable reason codes."""
+
+from __future__ import annotations
+
+from enum import Enum
+
+
+class Outcome(str, Enum):
+    APPROVE = "APPROVE"
+    REVIEW = "REVIEW"
+    DENY = "DENY"
+
+
+_SEVERITY = {Outcome.APPROVE: 0, Outcome.REVIEW: 1, Outcome.DENY: 2}
+
+
+def stricter(a: Outcome, b: Outcome) -> Outcome:
+    """Return the stricter of two outcomes. The risk stage can only use this."""
+    return a if _SEVERITY[a] >= _SEVERITY[b] else b
+
+
+class Code(str, Enum):
+    # schema
+    MALFORMED = "MALFORMED"
+    # signature / identity
+    BAD_SIGNATURE = "BAD_SIGNATURE"
+    UNKNOWN_AGENT = "UNKNOWN_AGENT"
+    AGENT_REVOKED = "AGENT_REVOKED"
+    # mandate / consent
+    MANDATE_MISSING = "MANDATE_MISSING"
+    MANDATE_MALFORMED = "MANDATE_MALFORMED"
+    MANDATE_UNKNOWN_SIGNER = "MANDATE_UNKNOWN_SIGNER"
+    MANDATE_BAD_SIGNATURE = "MANDATE_BAD_SIGNATURE"
+    MANDATE_SIGNER_MISMATCH = "MANDATE_SIGNER_MISMATCH"
+    MANDATE_ID_MISMATCH = "MANDATE_ID_MISMATCH"
+    MANDATE_AGENT_MISMATCH = "MANDATE_AGENT_MISMATCH"
+    MANDATE_REVOKED = "MANDATE_REVOKED"
+    MANDATE_NOT_YET_VALID = "MANDATE_NOT_YET_VALID"
+    MANDATE_EXPIRED = "MANDATE_EXPIRED"
+    # replay / duplicate
+    STALE_TIMESTAMP = "STALE_TIMESTAMP"
+    REPLAY = "REPLAY"
+    IDEMPOTENCY_CONFLICT = "IDEMPOTENCY_CONFLICT"
+    IDEMPOTENT_REPLAY = "IDEMPOTENT_REPLAY"  # informational: original returned
+    # delegated authority
+    CATEGORY_NOT_ALLOWED = "CATEGORY_NOT_ALLOWED"
+    CURRENCY_MISMATCH = "CURRENCY_MISMATCH"
+    OVER_TXN_CAP = "OVER_TXN_CAP"
+    OVER_CUMULATIVE_CAP = "OVER_CUMULATIVE_CAP"
+    VELOCITY = "VELOCITY"
+    # risk
+    RISK_REVIEW = "RISK_REVIEW"
+    RISK_DENY = "RISK_DENY"
+    RISK_UNAVAILABLE = "RISK_UNAVAILABLE"
+    # human review
+    HUMAN_APPROVED = "HUMAN_APPROVED"
+    HUMAN_REJECTED = "HUMAN_REJECTED"
+    REVIEW_NOT_FOUND = "REVIEW_NOT_FOUND"
+    REVIEW_BINDING_MISMATCH = "REVIEW_BINDING_MISMATCH"
+    REVIEW_EXPIRED = "REVIEW_EXPIRED"
+    # operational
+    INTERNAL_ERROR = "INTERNAL_ERROR"

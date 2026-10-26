@@ -1,0 +1,109 @@
+{
+  "explanation_method": "linear",
+  "model": {
+    "at_deny_threshold": {
+      "fn": 69,
+      "fp": 2,
+      "precision": 0.9697,
+      "recall": 0.4812,
+      "tn": 9496,
+      "tp": 64
+    },
+    "at_review_threshold": {
+      "fn": 33,
+      "fp": 66,
+      "precision": 0.6024,
+      "recall": 0.7519,
+      "tn": 9432,
+      "tp": 100
+    },
+    "pr_auc": 0.777
+  },
+  "model_accuracy_at_review": 0.9897,
+  "model_kind": "logistic_regression",
+  "model_version": "logit-fa93b699fa6e",
+  "never_fraud_baseline": {
+    "accuracy": 0.9862,
+    "note": "Always predicting 'legitimate' is right about 99% of the time and catches nothing. A constant score has PR-AUC equal to the fraud rate.",
+    "pr_auc": 0.0138,
+    "precision": null,
+    "recall": 0.0
+  },
+  "order_of_events": [
+    "generate",
+    "time_split",
+    "fit_on_train",
+    "score_validation",
+    "choose_thresholds_on_validation",
+    "thresholds_frozen_to_disk",
+    "score_test"
+  ],
+  "prevalence": 0.01381,
+  "recall_by_pattern_on_test": {
+    "cap_hugging": {
+      "caught_at_review_or_above": 23,
+      "n": 28,
+      "recall_at_review": 0.8214
+    },
+    "card_testing": {
+      "caught_at_review_or_above": 37,
+      "n": 40,
+      "recall_at_review": 0.925
+    },
+    "drain": {
+      "caught_at_review_or_above": 39,
+      "n": 41,
+      "recall_at_review": 0.9512
+    },
+    "slow_novel": {
+      "caught_at_review_or_above": 1,
+      "n": 24,
+      "recall_at_review": 0.0417
+    }
+  },
+  "routing_on_test": {
+    "approve": {
+      "fraud": 33,
+      "legit": 9432
+    },
+    "deny": {
+      "fraud": 64,
+      "legit": 2
+    },
+    "review": {
+      "fraud": 36,
+      "legit": 64
+    }
+  },
+  "splits": [
+    {
+      "fraud": 270,
+      "fraud_rate": 0.00935,
+      "rows": 28892,
+      "split": "train",
+      "ts_max": 1764484983,
+      "ts_min": 1759968062
+    },
+    {
+      "fraud": 92,
+      "fraud_rate": 0.00955,
+      "rows": 9631,
+      "split": "validation",
+      "ts_max": 1766002820,
+      "ts_min": 1764485129
+    },
+    {
+      "fraud": 133,
+      "fraud_rate": 0.01381,
+      "rows": 9631,
+      "split": "test",
+      "ts_max": 1767743565,
+      "ts_min": 1766003083
+    }
+  ],
+  "thresholds": {
+    "deny": 0.6876644108892366,
+    "review": 0.03479873285718275
+  },
+  "validation_pr_auc": 0.8611
+}

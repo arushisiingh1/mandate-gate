@@ -1,0 +1,80 @@
+MANDATE GATE demo (offline, simulated clock, simulated payments)
+  risk model logit-fa93b699fa6e (linear reasons), review>=0.035 deny>=0.688
+  mandate: per-transaction $300.00, cumulative $3,000.00, categories books, electronics, groceries, home, software
+  gate rules: replay window 120s, velocity 5 per 60 min
+
+-- Warm-up: a few routine purchases earlier in the day, so the agent has a history
+ok [check] warm-up purchases approved - {'APPROVE': 12, 'REVIEW': 0, 'DENY': 0}
+
+-- Afternoon (Tue 14:30:00 UTC): authorization checks
+ok [  S1] APPROVE     $27.45  routine in-mandate purchase
+          reason: -
+          risk score 0.000  [RECENT_ACTIVITY(1):+0.94; TIME_SINCE_LAST_TXN(1.8e+03):+0.68; AMOUNT(2.74e+03):+0.33]
+ok [  S2] APPROVE     $27.45  retry of the same intent (new nonce, same idempotency key)
+          reason: - (original returned, no new charge)
+          risk score 0.000  [RECENT_ACTIVITY(1):+0.94; TIME_SINCE_LAST_TXN(1.8e+03):+0.68; AMOUNT(2.74e+03):+0.33]
+ok [check] S2 created no second charge
+ok [  S3] DENY        $27.45  attacker replays the exact signed message from S1
+          reason: REPLAY
+ok [  S4] DENY       $299.00  amount edited after signing ($27.45 -> $299.00)
+          reason: BAD_SIGNATURE
+ok [  S5] DENY       $450.00  over the per-transaction cap
+          reason: OVER_TXN_CAP
+ok [  S6] DENY        $50.00  category not on the mandate allowlist
+          reason: CATEGORY_NOT_ALLOWED
+
+-- Prompt injection: instructions hidden in scraped merchant page text
+   (the gullible agent obeys them: the worst case for the agent)
+ok [ S7a] DENY     $2,500.00  injected $2,500 gift-card purchase
+          reason: CATEGORY_NOT_ALLOWED
+ok [check] S7b injected extra fields rejected by the strict schema before signing (and logged) - missing=[] extra=['approved_by_user', 'override_risk_check']
+ok [ S7c] DENY       $180.00  injected purchase that stays inside the mandate (see note)
+          reason: RISK_DENY
+          risk score 0.942  [CATEGORY(electronics):+5.35; NEW_MERCHANT(1):+3.47; AMOUNT_VS_TXN_CAP(0.6):+2.70]
+          note: the gate bounds the damage with caps; it cannot read intent. Within-mandate
+          spend is only caught if the advisory risk score flags it.
+
+-- Splitting: one $1,592 purchase as eight $199 purchases
+   part 1: APPROVE -
+   part 2: APPROVE -
+   part 3: APPROVE -
+   part 4: DENY    VELOCITY
+   part 5: DENY    VELOCITY
+   part 6: DENY    VELOCITY
+   part 7: DENY    VELOCITY
+   part 8: DENY    VELOCITY
+ok [check] velocity limit stopped the split - 3 of 8 got through or were held, 5 denied for velocity; 5 in the last hour (limit 5)
+
+-- Night (Wed 03:10:00 UTC): large purchases at brand-new merchants
+ok [  S8] REVIEW     $255.00  85% of the cap, 03:10, new merchant
+          reason: RISK_REVIEW
+          risk score 0.607  [CATEGORY(electronics):+5.35; AMOUNT_VS_TXN_CAP(0.85):+4.29; NEW_MERCHANT(1):+3.47]
+ok [  S9] REVIEW     $270.00  90% of the cap, 03:12, another new merchant
+          reason: RISK_REVIEW
+          risk score 0.662  [CATEGORY(electronics):+5.35; AMOUNT_VS_TXN_CAP(0.9):+4.61; NEW_MERCHANT(1):+3.47]
+
+-- Human review queue
+   review rv_000017: $255.00 electronics at gadget-outlet.example
+      reasons: CATEGORY(electronics):+5.35; AMOUNT_VS_TXN_CAP(0.85):+4.29; NEW_MERCHANT(1):+3.47
+      reviewer approved -> APPROVE HUMAN_APPROVED
+   review rv_000018: $270.00 electronics at dealzone.example
+      reasons: CATEGORY(electronics):+5.35; AMOUNT_VS_TXN_CAP(0.9):+4.61; NEW_MERCHANT(1):+3.47
+      reviewer rejected -> DENY HUMAN_REJECTED
+ok [check] approval cannot be reused - REVIEW_NOT_FOUND
+ok [ S10] DENY       $260.00  same idempotency key, amount raised after approval
+          reason: IDEMPOTENCY_CONFLICT
+ok [ S11] DENY       $255.00  same item and amount but a different new merchant: no inherited approval
+          reason: RISK_DENY
+          risk score 0.986  [CATEGORY(electronics):+5.35; AMOUNT_VS_TXN_CAP(0.85):+4.29; NEW_MERCHANT(1):+3.47]
+          note: a follow-up at the SAME merchant is judged on its own merits, and that merchant
+          is now known because a human approved a purchase there. The approval token itself
+          is bound to one exact proposal (see tests/test_attacks.py).
+
+-- Invariants and audit log
+   17 charges, total $1,293.87 of $3,000.00 allowed
+ok [check] every charge is inside the mandate (cap, categories, total)
+ok [check] audit log verifies - 36 records, head 6699b0d22a238e66...
+   16 of 36 records are denials; every one is in the log
+ok [check] editing one record in a copy of the log is detected - verification fails at seq 23: record hash mismatch (edited?)
+
+22/22 expectations met

@@ -1,0 +1,27 @@
+{
+  "chosen_on": "validation",
+  "dataset_sha256": "801318407da325a894b6c402ed3eadf244cba9402900fa1b1b4ba334ba22fbd4",
+  "days": 90,
+  "explanation_method": "linear",
+  "fit_parity_max_abs_diff": 9.43689570931383e-16,
+  "model_file": "risk_model.json",
+  "model_kind": "logistic_regression",
+  "model_sha256": "fa93b699fa6efcf23cd988b159c1b78d7a4526e5abcc1635bfba7de724f27fc8",
+  "model_version": "logit-fa93b699fa6e",
+  "n_agents": 300,
+  "risk_deny_threshold": 0.6876644108892366,
+  "risk_review_threshold": 0.03479873285718275,
+  "seed": 7,
+  "targets": {
+    "deny_precision": 0.95,
+    "review_recall": 0.9
+  },
+  "train_end_ts": 1764484983,
+  "val_end_ts": 1766002820,
+  "validation_confusion_at_review": {
+    "fn": 9,
+    "fp": 83,
+    "tn": 9456,
+    "tp": 83
+  }
+}

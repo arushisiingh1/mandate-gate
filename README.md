@@ -58,8 +58,7 @@ Checks run in a fixed order and stop at the first failure. Any exception is a de
 Two properties matter most. **The risk score can only make a decision stricter**, so a low score never overrides a failed check. **A
 human approval is tied to the exact proposal it was given for**, so it cannot be reused for a retry or an altered amount.
 
-The order is a security property, not a style choice. [docs/STUDY_GUIDE.md](docs/STUDY_GUIDE.md) explains why each check sits where it
-does; [docs/MUTATION_REPORT.md](docs/MUTATION_REPORT.md) *measures* what breaks when each is removed;
+The order is a security property, not a style choice. [docs/MUTATION_REPORT.md](docs/MUTATION_REPORT.md) *measures* what breaks when each is removed;
 [docs/GATE_WALKTHROUGH.md](docs/GATE_WALKTHROUGH.md) reads `gate.py` top to bottom with the reasoning.
 
 ### How it maps to Agent Trust
@@ -205,7 +204,7 @@ tests/                   189 tests: unit, 40 named attacks (A01-A40), randomised
 scripts/                 mutation_check.py, build_notebook.py
 notebooks/               risk_model.ipynb: precision, recall, PR-AUC against a never-fraud baseline
 artifacts/risk/          committed model (JSON), frozen thresholds, metrics, report, PR curve
-docs/                    GATE_WALKTHROUGH, STUDY_GUIDE, INTERVIEW_PREP, MUTATION_REPORT, demo_transcript
+docs/                    GATE_WALKTHROUGH, MUTATION_REPORT, demo_transcript
 THREAT_MODEL.md  DECISIONS.md  AI_ASSISTANCE_LOG.md
 ```
 
@@ -217,8 +216,6 @@ THREAT_MODEL.md  DECISIONS.md  AI_ASSISTANCE_LOG.md
 | [DECISIONS.md](DECISIONS.md) | Per module: the choice, a rejected alternative, how it fails |
 | [AI_ASSISTANCE_LOG.md](AI_ASSISTANCE_LOG.md) | Who wrote what, what was found wrong, what a human must still do |
 | [docs/GATE_WALKTHROUGH.md](docs/GATE_WALKTHROUGH.md) | `gate.py` top to bottom, with the reasoning and likely questions |
-| [docs/STUDY_GUIDE.md](docs/STUDY_GUIDE.md) | Explain-aloud checklist; quizzes on check order and on removing each check |
-| [docs/INTERVIEW_PREP.md](docs/INTERVIEW_PREP.md) | Pitch, questions with answers, Web Bot Auth notes, how to drill |
 | [docs/MUTATION_REPORT.md](docs/MUTATION_REPORT.md) | 15 mutants, all killed |
 
 ## License

@@ -204,8 +204,7 @@ tests/                   189 tests: unit, 40 named attacks (A01-A40), randomised
 scripts/                 mutation_check.py, build_notebook.py
 notebooks/               risk_model.ipynb: precision, recall, PR-AUC against a never-fraud baseline
 artifacts/risk/          committed model (JSON), frozen thresholds, metrics, report, PR curve
-docs/                    MUTATION_REPORT, demo_transcript
-THREAT_MODEL.md  DECISIONS.md  AI_ASSISTANCE_LOG.md
+docs/                    MUTATION_REPORT, demo_transcript, THREAT_MODEL.md  DECISIONS.md  AI_ASSISTANCE_LOG.md
 ```
 
 ## Documents

@@ -1,6 +1,6 @@
 # AI-assistance log
 
-The brief's rule: keep a running log of what Claude scaffolded, what the author wrote, what was edited, and what was found wrong in Claude's output. This is that log for the build that produced this repository. 
+The brief's rule: keep a running log of what I/Claude scaffolded, what the I wrote, what was edited, and what was found wrong in Claude's output. This is that log for the build that produced this repository. 
 
 ## Who did what
 

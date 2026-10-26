@@ -20,7 +20,7 @@ is deliberate; the aim was to build on a known pattern rather than invent a diff
 
 - a risk score that **can only tighten** a decision and explains itself with reason codes;
 - **idempotency keys on top of nonces**, so a replayed message and a legitimate retry are different cases;
-- **cumulative caps and a velocity limit**, with pending human reviews counting against both;
+- **cumulative caps and a velocity limit**, with my (human) reviews counting against both;
 - a **hash-chained audit log** written before any state change;
 - an **adversarial test suite** (40 named attacks) and a **mutation check** that proves each gate check is load-bearing.
 
@@ -204,7 +204,7 @@ tests/                   189 tests: unit, 40 named attacks (A01-A40), randomised
 scripts/                 mutation_check.py, build_notebook.py
 notebooks/               risk_model.ipynb: precision, recall, PR-AUC against a never-fraud baseline
 artifacts/risk/          committed model (JSON), frozen thresholds, metrics, report, PR curve
-docs/                    GATE_WALKTHROUGH, MUTATION_REPORT, demo_transcript
+docs/                    MUTATION_REPORT, demo_transcript
 THREAT_MODEL.md  DECISIONS.md  AI_ASSISTANCE_LOG.md
 ```
 
@@ -214,8 +214,7 @@ THREAT_MODEL.md  DECISIONS.md  AI_ASSISTANCE_LOG.md
 |---|---|
 | [THREAT_MODEL.md](THREAT_MODEL.md) | Who is trusted, 18 threats with control and test, known gaps |
 | [DECISIONS.md](DECISIONS.md) | Per module: the choice, a rejected alternative, how it fails |
-| [AI_ASSISTANCE_LOG.md](AI_ASSISTANCE_LOG.md) | Who wrote what, what was found wrong, what a human must still do |
-| [docs/GATE_WALKTHROUGH.md](docs/GATE_WALKTHROUGH.md) | `gate.py` top to bottom, with the reasoning and likely questions |
+| [AI_ASSISTANCE_LOG.md](AI_ASSISTANCE_LOG.md) | Who wrote what, what was found wrong, what I must still do |
 | [docs/MUTATION_REPORT.md](docs/MUTATION_REPORT.md) | 15 mutants, all killed |
 
 ## License

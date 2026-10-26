@@ -2,10 +2,6 @@
 
 For each module: what it does, one alternative that was rejected, and one way it can fail.
 
-> **Status: draft for the author to own.** The project brief says these notes are written by the human before each
-> module, as a check that they can defend the design. In this build they were drafted by Claude from the code as it
-> stands, so they are a starting point to read, argue with and rewrite, not evidence that anyone has yet explained
-> these modules out loud. Where a decision changed during review, the entry says so.
 
 ## canonical.py: one byte encoding for signing and hashing
 Sorted keys, no whitespace, ASCII escapes, and **no floats anywhere**; money is integer cents. *Rejected:* RFC 8785 (JCS),

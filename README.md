@@ -59,7 +59,7 @@ Two properties matter most. **The risk score can only make a decision stricter**
 human approval is tied to the exact proposal it was given for**, so it cannot be reused for a retry or an altered amount.
 
 The order is a security property, not a style choice. [docs/MUTATION_REPORT.md](docs/MUTATION_REPORT.md) *measures* what breaks when each is removed;
-[docs/GATE_WALKTHROUGH.md](docs/GATE_WALKTHROUGH.md) reads `gate.py` top to bottom with the reasoning.
+[GATE_WALKTHROUGH.md](GATE_WALKTHROUGH.md) reads `gate.py` top to bottom with the reasoning.
 
 ### How it maps to Agent Trust
 

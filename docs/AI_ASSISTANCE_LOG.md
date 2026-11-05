@@ -75,6 +75,7 @@ The feedback after reading the brief, and how each point was handled.
 - **Not run:** the Claude-backed agent against the real API (a fake client is tested); `pip install .` (the sandbox's
   setuptools fails on even a trivial package, so only the metadata, package discovery and entry point were checked); pytest (the tests
   are `unittest` classes, run with `python -m unittest`, and are written to be collected by pytest unchanged); the GitHub Actions workflow.
-- **The notebook's outputs were produced by `scripts/build_notebook.py`,** a small executor, because Jupyter could not be installed.
+  EDIT: I have tested the full package locally, and it should work. 
+- **The notebook's outputs were produced by `scripts/build_notebook.py`,** a small executor, because Jupyter could not be installed locally.
   Open it in Jupyter and run all to refresh it.
 - Everything about fraud performance is on synthetic data.

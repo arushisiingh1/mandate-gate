@@ -11,7 +11,7 @@ The code is the gate and the attack suite. The fraud model is deliberately small
 
 > **Everything here is a simulation:** no real money, identity, merchants or payment rails, and the risk model is trained on
 > synthetic data. [What is real and what is simulated](#what-is-real-and-what-is-simulated) is the most important section.
-> [docs/AI_ASSISTANCE_LOG.md](AI_ASSISTANCE_LOG.md) says plainly how this repository was built.
+> [AI_ASSISTANCE_LOG.md](docs/AI_ASSISTANCE_LOG.md) says plainly how this repository was built.
 
 ## Relationship to existing work
 

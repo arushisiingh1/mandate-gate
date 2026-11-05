@@ -7,13 +7,11 @@ Invariants (each has tests, and the attack suite tries to break them):
 
 1. Fail closed. Any unexpected exception becomes a DENY, never an approval and
    never an exception to the caller.
-2. The risk score can only make a decision stricter. It runs only after every
-   rule check passed, and its result is combined with ``stricter``.
-3. No audit record, no spend. The record is written *before* any state change
+2. No audit record, no spend. The record is written *before* any state change
    (charge, reservation, idempotency entry) is applied.
-4. A human approval is bound to the exact proposal it was given for
+3. A human approval is bound to the exact proposal it was given for
    (``payload_hash``), is single use, and re-checks the mandate when it is used.
-5. Every decision, denials included, is appended to the hash-chained log.
+4. Every decision, denials included, is appended to the hash-chained log.
 """
 
 from __future__ import annotations
